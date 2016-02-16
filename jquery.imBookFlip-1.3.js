@@ -115,8 +115,11 @@
 				init();
 			}
 		};
-		
+
+        var flipping_pages=0;
 		this.flipPage = function(d) {
+            if (flipping_pages==1) {  return; }
+            flipping_pages=1;
 			if (d == 'next') {
 				if (rightStart < numPages) {
 					nextPage();
@@ -370,6 +373,7 @@
 				} else if (opts.autoFlip != 'off') {
 					doAutoFlip();
 				}
+                flipping_pages=0;
 			});
 		};
 		
@@ -411,6 +415,7 @@
 				$(pFlipR).css({'left': '0px'});
 				$(pFlipL).css({'left': '0px'});
 				onPageShow();
+                flipping_pages=0;
 			});
 			if (pageSelected != -1) {
 				goToPrevPage();
@@ -483,7 +488,8 @@
 	         }); //close $.ajax(
 	    };
 	    
-	    var showError = function() {
+	    var showError = function(jqXHR, textStatus, errorThrown ) {
+            alert("error: " + textStatus + " " + errorThrown);
 	    	
 	    };
 	    
